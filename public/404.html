@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting…</title>
+    <script>
+        /**
+         * GitHub Pages serves this file for unknown routes.
+         * Save the original requested path, then redirect to the SPA root.
+         * The SPA will read sessionStorage.gh_redirect and restore the route.
+         */
+        try {
+            sessionStorage.setItem('gh_redirect', location.pathname + location.search + location.hash);
+        } catch (e) {
+            // ignore sessionStorage errors
+        }
+        // Replace with your repo base path (keep trailing slash):
+        location.replace('/Purchase_Tracker2/');
+    </script>
+</head>
+
+<body>
+    Redirecting…
+</body>
+
+</html>
