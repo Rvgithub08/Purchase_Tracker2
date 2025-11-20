@@ -41,12 +41,12 @@ import { AuthProvider } from "./contexts/AuthContext";
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/*" element={<App />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
   </React.StrictMode>
 );
