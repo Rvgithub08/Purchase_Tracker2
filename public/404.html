@@ -6,18 +6,19 @@
     <meta name="robots" content="noindex" />
     <title>Redirecting…</title>
     <script>
-        /**
-         * GitHub Pages serves this file for unknown routes.
-         * Save the original requested path, then redirect to the SPA root.
-         * The SPA will read sessionStorage.gh_redirect and restore the route.
-         */
+        // Save full original path (including query + hash) to sessionStorage for the SPA to read,
+        // then navigate to the SPA root. We use replace() to avoid extra history entries.
         try {
-            sessionStorage.setItem('gh_redirect', location.pathname + location.search + location.hash);
-        } catch (e) {
-            // ignore sessionStorage errors
-        }
-        // Replace with your repo base path (keep trailing slash):
-        location.replace('/Purchase_Tracker2/');
+            var original = location.pathname + location.search + location.hash;
+            sessionStorage.setItem('gh_redirect', original);
+        } catch (e) { /* ignore */ }
+
+        // IMPORTANT: Set this to your project base path (must match vite.config.js base).
+        // For project site use '/Purchase_Tracker2/' ; for username site use '/'.
+        var base = '/Purchase_Tracker2/';
+
+        // Do a direct replace to base so browser loads the SPA index
+        location.replace(base);
     </script>
 </head>
 

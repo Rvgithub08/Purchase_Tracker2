@@ -1,20 +1,22 @@
-// Restore original path when redirected by GH Pages 404.html
+// --- GH Pages SPA route restore (must be first in main.jsx) ---
 try {
   const ghRedirect = sessionStorage.getItem("gh_redirect");
   if (ghRedirect) {
     sessionStorage.removeItem("gh_redirect");
-    // import.meta.env.BASE_URL is the Vite base (set in vite.config.js).
+    // Vite's base URL (with trailing slash) if set; fallback to '/Purchase_Tracker2/'
     const base = import.meta.env.BASE_URL || "/Purchase_Tracker2/";
-    // build target URL by combining base (without trailing slash) + saved path
+    // remove trailing slash from base for concatenation
     const baseTrim = base.endsWith("/") ? base.slice(0, -1) : base;
+    // build target preserving original path
     const target =
       baseTrim + (ghRedirect.startsWith("/") ? ghRedirect : "/" + ghRedirect);
-    // Replace browser URL without reloading page (so React Router will handle it)
+    // update browser URL for Router without reloading (React Router will handle route)
     window.history.replaceState({}, "", target);
   }
 } catch (e) {
-  // ignore
+  // ignore any sessionStorage errors
 }
+// --- end restore block ---
 
 import React from "react";
 import { createRoot } from "react-dom/client";
