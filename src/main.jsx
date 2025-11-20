@@ -3,14 +3,26 @@ try {
   const ghRedirect = sessionStorage.getItem("gh_redirect");
   if (ghRedirect) {
     sessionStorage.removeItem("gh_redirect");
-    // Vite's base URL (with trailing slash) if set; fallback to '/Purchase_Tracker2/'
+
+    // Vite base (with trailing slash if set); fallback to project base:
     const base = import.meta.env.BASE_URL || "/Purchase_Tracker2/";
-    // remove trailing slash from base for concatenation
+    // remove trailing slash for safe comparisons/concat
     const baseTrim = base.endsWith("/") ? base.slice(0, -1) : base;
-    // build target preserving original path
-    const target =
-      baseTrim + (ghRedirect.startsWith("/") ? ghRedirect : "/" + ghRedirect);
-    // update browser URL for Router without reloading (React Router will handle route)
+
+    let target;
+    if (!baseTrim || baseTrim === "") {
+      // root site, saved path is already the correct full path
+      target = ghRedirect;
+    } else if (ghRedirect.startsWith(baseTrim)) {
+      // saved path already contains the base (e.g. '/Purchase_Tracker2/login')
+      target = ghRedirect;
+    } else {
+      // saved path is just the route (e.g. '/login') — prepend base
+      target =
+        baseTrim + (ghRedirect.startsWith("/") ? ghRedirect : "/" + ghRedirect);
+    }
+
+    // finally replace the browser URL (no reload) so React Router can render it
     window.history.replaceState({}, "", target);
   }
 } catch (e) {
