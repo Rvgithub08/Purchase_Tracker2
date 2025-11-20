@@ -35,7 +35,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import LoginPage from "./pages/LoginPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 
 createRoot(document.getElementById("root")).render(
